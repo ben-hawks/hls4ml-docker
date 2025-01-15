@@ -19,4 +19,6 @@ popd
 
 ./build_image.sh --iso
 
-docker builder prune
+docker builder prune -f
+
+rm -rf ./xilinx-docker/recipes/base-images/ubuntu-18.04.2/depends
