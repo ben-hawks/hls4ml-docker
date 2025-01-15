@@ -60,8 +60,8 @@ jobs:
 
       - name: Run script to build xilinx-docker user image
         run: |
-           chmod +x ./images/build-base-image-2020-1.sh
-           ./images/build-base-image-2020-1.sh
+           chmod +x ./images/2020.1/build-base-image-2020-1.sh
+           ./images/2020.1/build-base-image-2020-1.sh
         shell: bash
 
       # Login against a Docker registry except on PR
