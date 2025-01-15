@@ -7,7 +7,9 @@
 
 git submodule update --init --recursive
 
-cd xilinx-docker/recipes/user-images/v2020.1/ubuntu-18.04.2-user
+ls
+
+cd ./xilinx-docker/recipes/user-images/v2020.1/ubuntu-18.04.2-user
 
 # build the base image
 pushd ../../../base-images/ubuntu-18.04.2/
