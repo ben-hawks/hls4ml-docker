@@ -18,3 +18,5 @@ sudo ./build_image.sh --iso
 popd
 
 ./build_image.sh --iso
+
+docker builder prune
