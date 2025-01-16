@@ -44,14 +44,6 @@ ENV XILINXD_LICENSE_FILE=2100@
 
 COPY --from=build --chown=xilinx /venv /venv
 
-# Make and set the working directory
-RUN useradd -G 0 $USERNAME
-ENV HOME /home/${USERNAME}
-
-
-RUN mkdir -p /home/${USERNAME} \
-  && chown -R $USERNAME:$GID /home/${USERNAME}
-
 WORKDIR /home/${USERNAME}
 
 
