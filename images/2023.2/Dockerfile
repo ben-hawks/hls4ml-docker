@@ -1,4 +1,4 @@
-FROM xilinx-ubuntu-18.04.2-user:v2020.1 AS build
+FROM xilinx-ubuntu-20.04.4-user:v2023.2 AS build
 
 # Install Miniforge
 USER root
@@ -6,29 +6,29 @@ RUN curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/downloa
     && bash Miniforge3-$(uname)-$(uname -m).sh -b -p /opt/conda \
     && source "/opt/conda/etc/profile.d/conda.sh" \
     && echo "export PATH=/opt/conda/bin:$PATH" > /etc/profile.d/conda.sh \
-USER xilinx
+USER runner
 ENV PATH=/opt/conda/bin:$PATH
 #setups stuff
 RUN echo "source activate base" > ~/.bashrc
 #install packages
-COPY files/hls4ml.yml /tmp/hls4ml.yml
-RUN conda env create --name hls4ml --file /tmp/hls4ml.yml
+COPY images/include/acord-dac-cicd.yml /tmp/acord-dac-cicd.yml
+RUN conda env create --name acord-dac-cicd --file /tmp/acord-dac-cicd.yml
 
 RUN conda install -y -c conda-forge conda-pack
 
-RUN conda-pack -n hls4ml -o /tmp/env.tar && \
+RUN conda-pack -n acord-dac-cicd -o /tmp/env.tar && \
   mkdir /venv && cd /venv && tar xf /tmp/env.tar && \
   rm /tmp/env.tar
 
 RUN /venv/bin/conda-unpack
 
-FROM xilinx-ubuntu-18.04.2-user:v2020.1 AS deploy
+FROM xilinx-ubuntu-20.04.4-user:v2023.2 AS deploy
 
 LABEL org.opencontainers.image.source=https://github.com/ben-hawks/hls4ml-docker
-LABEL org.opencontainers.image.path="images/2020.1/Dockerfile"
-LABEL org.opencontainers.image.title="hls4ml-v0.8.1_2020.1"
-LABEL org.opencontainers.image.version="v0.8.1_v2020.1"
-LABEL org.opencontainers.image.description="A image for using hls4ml with Vivado 2020.1 and related tools."
+LABEL org.opencontainers.image.path="images/2023.2/Dockerfile"
+LABEL org.opencontainers.image.title="hls4ml-v1.0.0_2023.2"
+LABEL org.opencontainers.image.version="v1.0.0_v2023.2"
+LABEL org.opencontainers.image.description="A image for using hls4ml with Vitis 2023.2 and related tools."
 LABEL org.opencontainers.image.authors="Ben Hawks (@ben-hawks)"
 LABEL org.opencontainers.image.licenses="MIT"
 LABEL org.opencontainers.image.documentation=https://github.com/ben-hawks/hls4ml-docker/README.md
@@ -56,7 +56,9 @@ WORKDIR /home/${USERNAME}
 
 
 RUN echo "source /venv/bin/activate" >> ~/.bashrc
-RUN echo "source /opt/Xilinx/Vivado/2020.1/settings64.sh" >> ~/.bashrc
+RUN echo "source /opt/Xilinx/Petalinux/2023.2/settings.sh" >> ~/.bashrc
+RUN echo "source /opt/Xilinx/Vitis/2023.2/settings64.sh" >> ~/.bashrc
+RUN echo "source /opt/Xilinx/Vivado/2023.2/settings64.sh" >> ~/.bashrc
 RUN echo "export VIVADO=$(XILINX_VIVADO)" >> ~/.bashrc
 RUN cat ~/.bashrc
 

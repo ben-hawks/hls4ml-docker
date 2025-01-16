@@ -1,4 +1,4 @@
-name: v2020.1 Docker Build and Publish
+name: v2023.2 Docker Build and Publish
 
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
@@ -78,8 +78,8 @@ jobs:
 
       - name: Run script to build xilinx-docker user image
         run: |
-           chmod +x ./images/2020.1/build-base-image-2020-1.sh
-           ./images/2020.1/build-base-image-2020-1.sh
+           chmod +x ./images/2023.2/build-base-image-2023-2.sh
+           ./images/2023.2/build-base-image-2023-2.sh
         shell: bash
 
       # Login against a Docker registry except on PR
@@ -100,7 +100,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=raw, v0.8.1_2020.1
+            type=raw, v${{steps.pypi-version.outputs.latestVersion}}_2023.2
             type=sha
             
       
@@ -110,8 +110,8 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@0565240e2d4ab88bba5387d719585280857ece09 # v5.0.0
         with:
-          context: ./images/2020.1
-          file: images/2020.1/Dockerfile
+          context: ./images/2023.2
+          file: images/2023.2/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
