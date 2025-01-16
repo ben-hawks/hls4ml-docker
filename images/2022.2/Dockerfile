@@ -16,7 +16,7 @@ RUN conda env create --name hls4ml --file /tmp/hls4ml.yml
 
 RUN conda install -y -c conda-forge conda-pack
 
-RUN conda-pack -n acord-dac-cicd -o /tmp/env.tar && \
+RUN conda-pack -n hls4ml -o /tmp/env.tar && \
   mkdir /venv && cd /venv && tar xf /tmp/env.tar && \
   rm /tmp/env.tar
 
