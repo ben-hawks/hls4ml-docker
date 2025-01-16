@@ -8,6 +8,9 @@ name: v2023.2 Docker Build and Publish
 on:
   push:
     branches: [ "master" ]
+    paths:
+      - 'images/2023.2/**'
+      - '.github/workflows/docker-publish-2023-2-pypi.yml'
     # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
   pull_request:

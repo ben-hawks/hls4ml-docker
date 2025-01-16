@@ -11,8 +11,8 @@ ENV PATH=/opt/conda/bin:$PATH
 #setups stuff
 RUN echo "source activate base" > ~/.bashrc
 #install packages
-COPY images/include/acord-dac-cicd.yml /tmp/acord-dac-cicd.yml
-RUN conda env create --name acord-dac-cicd --file /tmp/acord-dac-cicd.yml
+COPY images/include/hls4ml.yml /tmp/hls4ml.yml
+RUN conda env create --name hls4ml --file /tmp/hls4ml.yml
 
 RUN conda install -y -c conda-forge conda-pack
 
